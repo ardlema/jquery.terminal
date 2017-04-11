@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>JSON-RPC Demo for JQuery Terminal Emulator</title>
+    <meta name="author" content="Jakub Jankiewicz - jcubic&#64;onet.pl"/>
+    <meta name="Description" content="Demonstration for JQuery Terminal Emulator using call automaticly JSON-RPC service (in php) with authentication."/>
+    <link rel="sitemap" type="application/xml" title="Sitemap" href=""/>
+    <link rel="shortcut icon" href="favicon.ico"/>
+    <script src="../js/jquery-1.7.1.min.js"></script>
+    <script src="../js/jquery.mousewheel-min.js"></script>
+    <script src="../js/jquery.terminal.min.js"></script>
+    <link href="../css/jquery.terminal.css" rel="stylesheet"/>
+    <script src="./app.js"></script>
+  </head>
+<body>
+
+<script>
+jQuery(document).ready(function($) {
+    var id = 1;
+    $('body').terminal(function(command, term) {
+      setupWebSocket(wsURL("input"), "input", term);
+      setupWebSocket(wsURL("output"), "output", term);
+         if (command == 'help') {
+            term.echo("available commands are ls");
+        } else if (command == 'ls'){
+            sendMessage('[command]\nls');
+
+        } else {
+            term.echo("unknown command " + command);
+        }
+    }, {
+        greetings: "Welcome to the khermes terminal!!",
+        prompt: 'khermes> ',
+        onBlur: function() {
+            // prevent loosing focus
+            return false;
+        }
+    });
+});
+
+</script>
+</body>
